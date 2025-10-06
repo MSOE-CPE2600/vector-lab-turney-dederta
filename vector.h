@@ -2,7 +2,7 @@
  * File: vector.h
  * Date: 9/29/25
  * Author: Ashlyn Dedert
- * Description: Header file for vector operations and storage.
+ * Description: Header file for vector operations.
 */
 
 #ifndef VECTOR_H

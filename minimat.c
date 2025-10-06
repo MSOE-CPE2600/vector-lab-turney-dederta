@@ -197,7 +197,7 @@ void parseAndExecute(char* line)
         return;
     }
 
-    // Just a variable to print
+    // Just a variable to print or command
     if (sscanf(line, "%s", rhs1) == 1)
     {
         if (getVector(rhs1, &v1))
@@ -230,6 +230,7 @@ void parseAndExecute(char* line)
     printf("Could not parse command\n");
 }
 
+// Main loop
 int main(int argc, char *argv[])
 {
     if (argc > 1 && strcmp(argv[1], "-h") == 0)

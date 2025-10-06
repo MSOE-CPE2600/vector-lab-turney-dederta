@@ -2,8 +2,8 @@
  * File: vector.c
  * Date: 9/29/25
  * Author: Ashlyn Dedert
- * Description:
- * Compile Instructions:
+ * Description: Implementation of vector operations.
+ * Compile Instructions: gcc vector.c -o vector OR make
 */
 
 #include <stdio.h>
