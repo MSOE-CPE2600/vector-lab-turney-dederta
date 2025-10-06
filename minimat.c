@@ -4,7 +4,6 @@
  * Author: Ashlyn Dedert
  * Description: A minimalistic matrix/vector calculator.
  * Compile Instructions: gcc -Wall -o minimat minimat.c vector.c OR make
- * // TODO USE TOKENS INSTEAD OF SSCANF
 */
 
 #include <stdio.h>
