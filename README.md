@@ -1,7 +1,7 @@
 # Vector Calculator (minimat)
 
 ## Overview
-minimat is a command-line vector calculator modeled after MatLab.
+Minimat is a command-line vector calculator modeled after MatLab.
 It allows users to define, manipulate, and save 3D vectors.
 
 ## Features

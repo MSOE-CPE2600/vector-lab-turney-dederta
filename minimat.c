@@ -6,8 +6,6 @@
  * Compile Instructions: gcc -Wall -o minimat minimat.c vector.c OR make
 */
 
-//TODO Update help documentation in code
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
