@@ -18,8 +18,11 @@ static int vectorCapacity = 0;
 // Storage
 void clearVectors() 
 {
-    free(vectors);
-    vectors = NULL;
+    if (vectors)
+    {
+        free(vectors);
+        vectors = NULL;
+    }
     vectorCount = 0;
     vectorCapacity = 0;
 }
@@ -167,7 +170,6 @@ int loadVectors(const char *filename)
 
             if (sscanf(line, "%[^,],%lf,%lf,%lf", name, &x, &y, &z) == 4)
             {
-                printf("Adding vector %s: (%.2f, %.2f, %.2f)\n", name, x, y, z);
                 addVector(name, x, y, z);
             }
         }
