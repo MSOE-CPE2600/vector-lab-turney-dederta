@@ -26,8 +26,15 @@ void clearVectors()
 
 void listVectors() 
 {
-    for (int i = 0; i < MAX_VECTORS; i++) {
-        if (vectors[i].in_use) {
+    if (!vectors)
+    {
+        return;
+    }
+
+    for (int i = 0; i < vectorCount; i++) 
+    {
+        if (vectors[i].in_use) 
+        {
             printf("%s: (%.2f, %.2f, %.2f)\n", 
                 vectors[i].name, 
                 vectors[i].val[0], 
@@ -37,7 +44,7 @@ void listVectors()
     }
 }
 
-int addVector(char* name, double x, double y, double z) 
+int addVector(const char* name, double x, double y, double z) 
 {
     // Replace if exists
     for (int i = 0; i < vectorCount; i++) {
@@ -57,6 +64,7 @@ int addVector(char* name, double x, double y, double z)
         vectors = malloc(vectorCapacity * sizeof(Vector));
         if (!vectors)
         {
+            fprintf(stderr, "Memory allocation failed\n");
             return 0;
         }
     }
@@ -88,7 +96,7 @@ int addVector(char* name, double x, double y, double z)
 
 int getVector(char* name, Vector *out) 
 {
-    for (int i = 0; i < MAX_VECTORS; i++) {
+    for (int i = 0; i < vectorCount; i++) {
         if (vectors[i].in_use && strcmp(vectors[i].name, name) == 0) {
             *out = vectors[i];
             return 1; // Found
@@ -137,4 +145,62 @@ Vector cross(Vector a, Vector b)
 double dot(Vector a, Vector b) 
 {
     return a.val[0]*b.val[0] + a.val[1]*b.val[1] + a.val[2]*b.val[2];
+}
+
+// I/O Functions
+
+int loadVectors(const char *filename)
+{
+    FILE *fp = fopen(filename, "r");
+    if (!fp) 
+    {
+        return 0;
+    }
+
+    char line[256];
+    while (fgets(line, sizeof(line), fp))
+    {
+        if (line[0] != '\n' && line[0] != '\r')
+        {
+            char name[10];
+            double x, y, z;
+
+            if (sscanf(line, "%[^,],%lf,%lf,%lf", name, &x, &y, &z) == 4)
+            {
+                printf("Adding vector %s: (%.2f, %.2f, %.2f)\n", name, x, y, z);
+                addVector(name, x, y, z);
+            }
+        }
+        else 
+        {
+            fprintf(stderr, "Warning: invalid line skipped -> %s", line);
+        }
+    }
+
+    fclose(fp);
+    return 1;
+}
+
+int saveVectors(const char *filename)
+{
+    FILE *fp = fopen(filename, "w");
+    if (!fp)
+    {
+        return 0;
+    }
+
+    for (int i = 0; i < vectorCount; i++)
+    {
+        if (vectors[i].in_use) 
+        {
+            fprintf(fp, "%s,%.2f,%.2f,%.2f\n",
+            vectors[i].name, 
+            vectors[i].val[0], 
+            vectors[i].val[1], 
+            vectors[i].val[2]);
+        }
+    }
+
+    fclose(fp);
+    return 1;
 }

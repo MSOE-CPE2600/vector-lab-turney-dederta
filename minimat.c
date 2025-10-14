@@ -33,6 +33,40 @@ void helpHelper(){
 
 void parseAndExecute(char* line)
 {
+    // Check load and save first
+    char cmd[10], fname[100];
+    if (sscanf(line, "%9s %99s", cmd, fname) == 2)
+    {
+        if (strcmp(cmd, "load") == 0)
+        {
+            if (loadVectors(fname))
+            {
+                printf("Loaded vectors from %s\n", fname);
+            }
+            else
+            {
+                printf("Failed to load file: %s\n", fname);
+            }
+            return;
+        }
+
+        if (strcmp(cmd, "save") == 0)
+        {
+
+            if (saveVectors(fname))
+            {
+                printf("Saved vectors to %s\n", fname);
+            }
+            else
+            {
+                printf("Failed to save file: %s\n", fname);
+            }
+            return;
+        }
+    }
+    
+
+    
     char lhs[10], rhs1[10], rhs2[10], op;
     double scalar;
     Vector v1, v2, result;
@@ -247,6 +281,8 @@ int main(int argc, char *argv[])
         line[strcspn(line, "\n")] = 0; // Remove newline
         parseAndExecute(line);
     }
+
+    clearVectors();
 
     return 0;
 }
