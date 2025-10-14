@@ -6,6 +6,8 @@
  * Compile Instructions: gcc -Wall -o minimat minimat.c vector.c OR make
 */
 
+//TODO Update help documentation in code
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,6 +31,9 @@ void helpHelper(){
     printf("  var                   Print vector\n");
     printf("  list                  List all vectors\n");
     printf("  clear                 Clear all vectors\n");
+    printf("  load filename         Load vectors from .csv file\n");
+    printf("  save filename         Save vectors to .csv file\n");
+    printf("  fill n                Fill with n random vectors\n");
     printf("  quit                  Exit program\n");
 }
 
@@ -272,6 +277,10 @@ void parseAndExecute(char* line)
                 int n = atoi(numStr);
                 fillVectors(n);
             }
+        }
+        else if (strcmp(rhs1, "load") == 0 || strcmp(rhs1, "save") == 0)
+        {
+            printf("Please provide a filename with the command.\n");
         }
         else
         {
