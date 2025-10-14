@@ -8,16 +8,20 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "vector.h"
 
-static Vector vectors[MAX_VECTORS];
+static Vector *vectors = NULL;
+static int vectorCount = 0;
+static int vectorCapacity = 0;
 
 // Storage
 void clearVectors() 
 {
-    for (int i = 0; i < MAX_VECTORS; i++) {
-        vectors[i].in_use = 0;
-    }
+    free(vectors);
+    vectors = NULL;
+    vectorCount = 0;
+    vectorCapacity = 0;
 }
 
 void listVectors() 
@@ -36,27 +40,50 @@ void listVectors()
 int addVector(char* name, double x, double y, double z) 
 {
     // Replace if exists
-    for (int i = 0; i < MAX_VECTORS; i++) {
-        if (vectors[i].in_use && strcmp(vectors[i].name, name) == 0) {
+    for (int i = 0; i < vectorCount; i++) {
+        if (strcmp(vectors[i].name, name) == 0) 
+        {
             vectors[i].val[0] = x;
             vectors[i].val[1] = y;
             vectors[i].val[2] = z;
             return 1; // Success
         }
     }
-    // insert into free slot
-    for (int i = 0; i < MAX_VECTORS; i++) {
-        if (!vectors[i].in_use) {
-            strncpy(vectors[i].name, name, sizeof(vectors[i].name)-1);
-            vectors[i].name[sizeof(vectors[i].name)-1] = '\0';
-            vectors[i].val[0] = x;
-            vectors[i].val[1] = y;
-            vectors[i].val[2] = z;
-            vectors[i].in_use = 1;
-            return 1; // Success
+
+    // Allocate initial memory if needed
+    if (vectorCapacity == 0)
+    {
+        vectorCapacity = 4;
+        vectors = malloc(vectorCapacity * sizeof(Vector));
+        if (!vectors)
+        {
+            return 0;
         }
     }
-    return 0; // Full
+
+    // Grow dynamically if full
+    if (vectorCount >= vectorCapacity) 
+    {
+        int newCapacity = vectorCapacity * 2;
+        Vector *newVectors = realloc(vectors, newCapacity * sizeof(Vector));
+        if (!newVectors)
+        {
+            return 0;
+        }
+        vectors = newVectors;
+        vectorCapacity = newCapacity;
+    }
+
+    // Add new vector
+    strncpy(vectors[vectorCount].name, name, sizeof(vectors[vectorCount].name) - 1);
+    vectors[vectorCount].name[sizeof(vectors[vectorCount].name) - 1] = '\0';
+    vectors[vectorCount].val[0] = x;
+    vectors[vectorCount].val[1] = y;
+    vectors[vectorCount].val[2] = z;
+    vectors[vectorCount].in_use = 1;
+    vectorCount++;
+
+    return 1;
 }
 
 int getVector(char* name, Vector *out) 

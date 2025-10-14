@@ -8,13 +8,14 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-#define MAX_VECTORS 10
+#include <stddef.h>
+
+#define NAME_LENGTH 10
 
 typedef struct Vector
 {
-    char name[10];
+    char name[NAME_LENGTH];
     double val[3];
-    int in_use; // Flag for whether this slot is filled
 } Vector;
 
 // storage functions
@@ -22,6 +23,13 @@ void clearVectors();
 void listVectors();
 int addVector(char* name, double x, double y, double z);
 int getVector(char* name, Vector *out);
+
+// Dynamic memory cleanup
+void freeVectors();
+
+// File I/O
+int loadVectors(const char *filename);
+int saveVectors(const char *filename);
 
 // math functions
 Vector add(Vector a, Vector b);
