@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
 #include "vector.h"
 
 void printVector(Vector v) 
@@ -266,6 +267,9 @@ void parseAndExecute(char* line)
 // Main loop
 int main(int argc, char *argv[])
 {
+    atexit(clearVectors);
+    signal(SIGINT, handle_sigint); // Register signal handler
+
     if (argc > 1 && strcmp(argv[1], "-h") == 0)
     {
         helpHelper();
