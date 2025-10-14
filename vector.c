@@ -154,12 +154,17 @@ double dot(Vector a, Vector b)
 
 int loadVectors(const char *filename)
 {
+    // check if the file name ends with .csv
+    checkCsvExtension((char *)filename);
+
+    // Open file for reading
     FILE *fp = fopen(filename, "r");
     if (!fp) 
     {
         return 0;
     }
 
+    // Read vectors from file
     char line[256];
     while (fgets(line, sizeof(line), fp))
     {
@@ -185,12 +190,17 @@ int loadVectors(const char *filename)
 
 int saveVectors(const char *filename)
 {
+    // check if the file name ends with .csv
+    checkCsvExtension((char *)filename);
+
+    // Open file for writing
     FILE *fp = fopen(filename, "w");
     if (!fp)
     {
         return 0;
     }
 
+    // Write vectors to file
     for (int i = 0; i < vectorCount; i++)
     {
         if (vectors[i].in_use) 
@@ -205,6 +215,19 @@ int saveVectors(const char *filename)
 
     fclose(fp);
     return 1;
+}
+
+void checkCsvExtension(char *filename)
+{
+    const char *dot = strrchr(filename, '.');
+    if (!dot || strcmp(dot, ".csv") != 0) 
+    {
+        // append .csv
+        if (strnlen(filename, 256) + 4 < 256) 
+        {
+            strcat(filename, ".csv");
+        }
+    }
 }
 
 // interruption handler for ctrl-c

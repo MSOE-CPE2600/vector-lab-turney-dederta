@@ -34,6 +34,7 @@ void freeVectors();
 // File I/O
 int loadVectors(const char *filename);
 int saveVectors(const char *filename);
+void checkCsvExtension(char *filename);
 
 // math functions
 Vector add(Vector a, Vector b);
