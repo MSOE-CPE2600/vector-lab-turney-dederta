@@ -34,7 +34,7 @@ void helpHelper(){
 
 void parseAndExecute(char* line)
 {
-    // Check load and save first
+    // Check load, save, fill first
     char cmd[10], fname[100];
     if (sscanf(line, "%9s %99s", cmd, fname) == 2)
     {
@@ -62,6 +62,15 @@ void parseAndExecute(char* line)
             {
                 printf("Failed to save file: %s\n", fname);
             }
+            return;
+        }
+
+        if (strcmp(cmd, "fill") == 0)
+        {
+            printf("Filling vectors\n");
+            int n = 0;
+            sscanf(fname, "%d", &n);
+            fillVectors(n);
             return;
         }
     }
@@ -253,6 +262,16 @@ void parseAndExecute(char* line)
         else if (strcmp(rhs1, "help") == 0)
         {
             helpHelper();
+        }
+        else if (strcmp(rhs1, "fill") == 0)
+        {
+            printf("Fill how many vectors? ");
+            char numStr[10];
+            if (fgets(numStr, sizeof(numStr), stdin))
+            {
+                int n = atoi(numStr);
+                fillVectors(n);
+            }
         }
         else
         {

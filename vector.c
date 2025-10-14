@@ -237,3 +237,21 @@ void handle_sigint(int sig)
     clearVectors();
     exit(0);
 }
+
+// Fill vectors easly
+void fillVectors(int n) 
+{
+    for (int i = 0; i < n; i++) 
+    {
+        char name[10];
+        snprintf(name, sizeof(name), "v%d", i+1);
+
+        double x = (double)(rand() % 100) / 10.0;
+        double y = (double)(rand() % 100) / 10.0;
+        double z = (double)(rand() % 100) / 10.0;
+
+        addVector(name, x, y, z);
+    }
+
+    printf("Filled with %d random vectors\n", n);
+}

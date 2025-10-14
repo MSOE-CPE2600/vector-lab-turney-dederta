@@ -43,4 +43,7 @@ Vector scalarMultiply(Vector v, double scalar);
 Vector cross(Vector a, Vector b);
 double dot(Vector a, Vector b);
 
+// Fill vectors
+void fillVectors(int n);
+
 #endif
