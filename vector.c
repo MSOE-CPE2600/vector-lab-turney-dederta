@@ -206,3 +206,11 @@ int saveVectors(const char *filename)
     fclose(fp);
     return 1;
 }
+
+// interruption handler for ctrl-c
+void handle_sigint(int sig) 
+{
+    printf("\nCaught signal %d, exiting...\n", sig);
+    clearVectors();
+    exit(0);
+}

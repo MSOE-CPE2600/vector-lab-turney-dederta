@@ -25,6 +25,9 @@ void listVectors();
 int addVector(const char* name, double x, double y, double z);
 int getVector(char* name, Vector *out);
 
+// inturuption handler for ctrl-c
+void handle_sigint(int sig);
+
 // Dynamic memory cleanup
 void freeVectors();
 
