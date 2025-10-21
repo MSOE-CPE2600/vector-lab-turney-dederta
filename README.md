@@ -24,8 +24,12 @@ It allows users to define, manipulate, and save 3D vectors.
 - 'fill n' - fills with n random vectors
 - 'quit' - cleanly exits the program
 
-## Compilation
-Build using make, or manually with gcc minimat.c vector.c -o minimat
+## Building and Running
+Build using `make`, or manually with `gcc minimat.c vector.c -o minimat`
+Run the program from the terminal with `./minimat`
+
+## Memory Management
+Minimat uses dynamic memory allocation to store and manage vectors effciently at runtime. Rather then using a fixed size array, it allocates memory on demand using `malloc()` when the first vector is adding, and automatically expands the storage with `realloc()` as more vectors are created. This allows the program to handle any number of vectors without wasting memory. When the user clears all vectors or exits the program `free()` is called to release the allocated memory, preventing memory leaks and ensuring a clean exit.
 
 ## Author
 Ashlyn Dedert
